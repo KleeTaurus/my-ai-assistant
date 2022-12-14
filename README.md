@@ -20,9 +20,7 @@ OpenAI 的使用场景：
 
 ### Python 环境搭建
 
-[Python Env](https://docs.python.org/3/library/venv.html)
-
-创建 virtualenv 环境
+创建 [Env](https://docs.python.org/3/library/venv.html) 环境, 
 
 ```shell
 $ python3 -m venv venv
@@ -35,7 +33,7 @@ $ source venv/bin/activate
 $ pip install openai
 ```
 
-获取 Model 列表
+获取全部 Model 列表
 
 ```python
 from datetime import datetime
@@ -56,7 +54,7 @@ for m in models:
         m["id"]))
 ```
 
-以下是 Model.list 返回的所有模型列表，从时间上看最近火爆的 ChatPGT3 就是基于 text-davinci-003 这个模型，目前还处于 Internal 内侧阶段。
+以下是 **Model.list** 返回的所有模型列表，从时间上看最近火爆的 ChatPGT-3 就是基于 text-davinci-003 这个模型，该模型目前还处于 Internal 内侧阶段。
 
 ```shell
 model, openai            , 2022-04-07 19:07:29, babbage
@@ -124,4 +122,28 @@ model, system            , 2022-01-12 01:06:48, text-ada:001
 model, system            , 2022-01-11 23:32:46, text-davinci:001
 model, system            , 2022-01-12 02:37:27, text-curie:001
 model, openai            , 2022-01-12 20:12:50, text-babbage:001
+```
+
+我们从知乎上找一个问题，看看 OpenAI 怎么回答。[如果你是《了不起的盖茨比》中的盖茨比，且深爱着黛西，会如何优雅地追回她？](https://www.zhihu.com/question/21832379/answer/1949236)
+
+```python
+import os
+import openai
+
+openai.organization = "org-eXcqm3mDqaR6m7xWX4Z4I9gu"
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
+the_question = """
+如果你是《了不起的盖茨比》中的盖茨比，且深爱着黛西，会如何优雅地追回她？
+"""
+
+response = openai.Completion.create(
+    model="text-davinci-003",
+    prompt=the_question,
+    max_tokens=2048,
+    temperature=1,
+)
+
+print("Your question: \n{}".format(the_question))
+print("OpenAI answer: \n{}".format(response.choices[0].text))
 ```
