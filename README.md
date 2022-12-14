@@ -38,12 +38,25 @@ $ pip install openai
 获取 Model 列表
 
 ```python
+from datetime import datetime
 import os
 import openai
+
 openai.organization = "org-eXcqm3mDqaR6m7xWX4Z4I9gu"
 openai.api_key = os.getenv("OPENAI_API_KEY")
-print(openai.Model.list())
+
+models = openai.Model.list().data
+
+for m in models:
+    ts = int(m["created"])
+    print("{0: <5}, {1: <18}, {2}, {3}".format(
+        m["object"],
+        m["owned_by"],
+        datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'),
+        m["id"]))
 ```
+
+以下是 Model.list 返回的所有模型列表，从时间上看最近火爆的 ChatPGT3 就是基于 text-davinci-003 这个模型，目前还处于 Internal 内侧阶段。
 
 ```shell
 model, openai            , 2022-04-07 19:07:29, babbage
