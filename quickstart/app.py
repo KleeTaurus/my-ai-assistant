@@ -13,15 +13,11 @@ def index():
         question = request.form["question"]
         response = openai.Completion.create(
             model="text-davinci-003",
-            prompt=generate_prompt(question),
-            temperature=1,
+            prompt=question,
+            temperature=0,
             max_tokens=2048,
         )
         return redirect(url_for("index", result=response.choices[0].text))
 
     result = request.args.get("result")
     return render_template("index.html", result=result)
-
-
-def generate_prompt(question):
-    return question
