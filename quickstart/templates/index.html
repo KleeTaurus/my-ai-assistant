@@ -12,7 +12,7 @@
   <img src="{{ url_for('static', filename='dog.png') }}" class="icon" />
   <h3>你的智能小助手</h3>
   <form action="/" method="post">
-    <input type="text" name="question" placeholder="此处输入你的问题" required />
+    <textarea name="question" rows="5" cols="33" placeholder="此处输入你的问题" required></textarea>
     <input type="submit" value="提交" />
   </form>
   {% if result %}
